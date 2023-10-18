@@ -5,6 +5,8 @@ from src.problems.maze import Field, Direction, Maze
 
 
 class Position(State):
+    """This class defines states as 'being at a field'.
+    """
 
     def __init__(
             self,
@@ -25,6 +27,9 @@ class Position(State):
 
 
 class DirectionOperator(Operator):
+    """This class defines operators as a movement over the maze in a specific
+    direction.
+    """
 
     def __init__(self, direction: Direction, maze: Maze):
         super().__init__(direction.name)

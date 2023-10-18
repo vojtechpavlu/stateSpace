@@ -3,6 +3,9 @@ from src.fw.algorithms.base import Algorithm, NoSolutionFound
 
 
 class GreedySearch(Algorithm):
+    """Simple implementation of a heuristic algorithm based on
+    a nearest-neighbour decisioning.
+    """
 
     def __init__(self):
         super().__init__("GREEDY")
@@ -38,8 +41,7 @@ class GreedySearch(Algorithm):
 
     def solve(self, initial_state: State, goal_state: State,
               operators: tuple[Operator]) -> State:
-        """"""
-
+        """Implementation of the actual algorithm."""
         self.__fringe.append(initial_state)
 
         while len(self.fringe) > 0:

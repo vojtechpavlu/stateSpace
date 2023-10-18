@@ -3,6 +3,9 @@ from src.fw.algorithms.base import BlindAlgorithm
 
 
 class DepthFirstSearch(BlindAlgorithm):
+    """Simple uninformed stack-based algorithm to search the graph
+    (state space) "by branches".
+    """
 
     def __init__(self):
         super().__init__("DFS")
