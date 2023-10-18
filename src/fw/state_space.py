@@ -17,6 +17,8 @@ class StateSpace:
     def solve(self) -> State:
         """"""
         algo = find(self.algorithm)
+        algo.goal_state = self.goal_state
+
         return algo.solve(
             self.initial_state,
             self.goal_state,

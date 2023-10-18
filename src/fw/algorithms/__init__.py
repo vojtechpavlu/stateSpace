@@ -3,16 +3,22 @@ from typing import Union
 from src.fw.algorithms.base import Algorithm
 from src.fw.algorithms.bfs import BreadthFirstSearch
 from src.fw.algorithms.dfs import DepthFirstSearch
+from src.fw.algorithms.greedy import GreedySearch
 from src.fw.algorithms.random_algo import Random
 
 
 def algorithms() -> tuple[Algorithm]:
     """"""
     return tuple([
+        # Blind algorithms
         DepthFirstSearch(),
         BreadthFirstSearch(),
 
-        Random()
+        # Heuristic algorithms
+        GreedySearch(),
+
+        # Random algorithms
+        # Random()
     ])
 
 

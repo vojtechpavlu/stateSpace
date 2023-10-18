@@ -1,6 +1,6 @@
 from abc import ABC, abstractmethod
 
-from src.fw import State, Operator
+from src.fw import State, Operator, Union
 
 
 class Algorithm(ABC):
@@ -9,10 +9,19 @@ class Algorithm(ABC):
     def __init__(self, name: str):
         """"""
         self.__name = name
+        self.__goal: Union[State, None] = None
 
     @property
     def name(self) -> str:
         return self.__name
+
+    @property
+    def goal_state(self) -> State:
+        return self.__goal
+
+    @goal_state.setter
+    def goal_state(self, goal: State):
+        self.__goal = goal
 
     @abstractmethod
     def next_state(self):
