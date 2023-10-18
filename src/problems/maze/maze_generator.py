@@ -4,7 +4,12 @@ from src.problems.maze import Maze, Path, Wall
 
 
 def generate_maze(base: int) -> Maze:
-    """Generates a random maze."""
+    """Generates a random maze from the given base size. These mazes might have
+    multiple ways to get to the goal. It also guarantees that every field
+    with both coordinates being odd, it points to a path (e.g. [1, 1]).
+
+    When the given base size is even or lower than 5, it rises an error.
+    """
 
     if base % 2 == 0:
         raise ValueError(f"Cannot create a maze of an even number: {base}")

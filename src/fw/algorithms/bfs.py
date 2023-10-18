@@ -3,6 +3,9 @@ from src.fw.algorithms.base import BlindAlgorithm
 
 
 class BreadthFirstSearch(BlindAlgorithm):
+    """Simple uninformed queue-based algorithm to search the graph
+    (state space) "by layers".
+    """
 
     def __init__(self):
         super().__init__("BFS")

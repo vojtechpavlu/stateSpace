@@ -1,3 +1,25 @@
+"""This module contains a definition of all the means for the Maze Solving.
+
+Most importantly, it declares the following classes:
+
+    - Direction:
+        Absolute orthogonal direction you can go to. It's meant to be used
+        as a transition from one field to another - it changes the coordinates.
+        Their definition is stored in a module-level variable _DIRECTIONS.
+
+    - Field:
+        Abstract representation of a field with assigned coordinates.
+
+    - Wall:
+        Field you cannot step on.
+
+    - Path:
+        Field you can step on.
+
+    - Maze:
+        A collection of fields the Maze is made of.
+"""
+
 from abc import ABC, abstractmethod
 from typing import Iterable, Union
 

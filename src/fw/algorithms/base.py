@@ -1,22 +1,36 @@
 from abc import ABC, abstractmethod
 
-from src.fw import State, Operator
+from src.fw import State, Operator, Union
 
 
 class Algorithm(ABC):
-    """"""
+    """Abstract class declaring the protocol of an algorithm to search the
+    state space.
+    """
 
     def __init__(self, name: str):
-        """"""
         self.__name = name
+        self.__goal: Union[State, None] = None
 
     @property
     def name(self) -> str:
+        """Name of the algorithm"""
         return self.__name
+
+    @property
+    def goal_state(self) -> State:
+        """State the algorithm should be trying to reach."""
+        return self.__goal
+
+    @goal_state.setter
+    def goal_state(self, goal: State):
+        """Setter for the goal state the algorithm should be trying to reach.
+        """
+        self.__goal = goal
 
     @abstractmethod
     def next_state(self):
-        """"""
+        """Provides next state to be searched."""
 
     @abstractmethod
     def solve(
@@ -25,7 +39,10 @@ class Algorithm(ABC):
             goal_state: State,
             operators: tuple[Operator]
     ) -> State:
-        """"""
+        """Tries to find the solution.
+        When finished, it returns the state equivalent to the goal one with
+        assigned tree-path from the root with all the applied operators.
+        """
 
     def __repr__(self):
         return self.name
@@ -38,7 +55,11 @@ class BlindAlgorithm(Algorithm, ABC):
 
     def __init__(self, name: str):
         super().__init__(name)
+
+        # Scheduled states to be searched in
         self.__fringe: list[State] = []
+
+        # States the algorithm already searched and found their descendants
         self.__closed: list[State] = []
 
     @property
@@ -97,4 +118,6 @@ class BlindAlgorithm(Algorithm, ABC):
 
 
 class NoSolutionFound(Exception):
-    """"""
+    """Exception risen in case the algorithm reached a specific limit or the
+    solution is not available for the algorithm in any other way.
+    """
