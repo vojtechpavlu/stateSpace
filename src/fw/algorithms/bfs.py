@@ -1,8 +1,8 @@
 from src.fw import State
-from src.fw.algorithms.base import BlindAlgorithm
+from src.fw.algorithms.base import Algorithm
 
 
-class BreadthFirstSearch(BlindAlgorithm):
+class BreadthFirstSearch(Algorithm):
     """Simple uninformed queue-based algorithm to search the graph
     (state space) "by layers".
     """
