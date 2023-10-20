@@ -96,7 +96,7 @@ class Algorithm(ABC):
             self.add_to_closed(current)
 
         # There's no state to be searched in and still no solution found
-        raise NoSolutionFound()
+        raise NoSolutionFound(state=self.closed[-1])
 
     def __repr__(self):
         return self.name
@@ -106,3 +106,18 @@ class NoSolutionFound(Exception):
     """Exception risen in case the algorithm reached a specific limit or the
     solution is not available for the algorithm in any other way.
     """
+
+    def __init__(self, state: Union[State, None] = None, message: str = ""):
+        Exception.__init__(self, message)
+        self.__message = f"Couldn't find solution: '{message}'"
+        self.__state = state
+
+    @property
+    def message(self) -> str:
+        """Error message"""
+        return self.__message
+
+    @property
+    def state(self) -> Union[State, None]:
+        """State the algorithm got stuck at."""
+        return self.__state

@@ -7,6 +7,7 @@ from typing import Union
 from src.fw.algorithms.base import Algorithm
 from src.fw.algorithms.bfs import BreadthFirstSearch
 from src.fw.algorithms.dfs import DepthFirstSearch
+from src.fw.algorithms.gradient_search import GradientSearch
 from src.fw.algorithms.greedy import GreedySearch
 from src.fw.algorithms.a_star import AStar
 from src.fw.algorithms.random_algo import FullRandom
@@ -22,6 +23,7 @@ def algorithms() -> tuple[Algorithm]:
 
         # Heuristic algorithms
         GreedySearch(),
+        GradientSearch(),
         AStar(),
 
         # Random algorithms

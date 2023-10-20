@@ -14,6 +14,7 @@ def start_maze_solving(
     print_time: bool = True,
     print_empty: bool = True,
     print_path: bool = True,
+    print_error_path: bool = True,
     print_operators: bool = True,
     print_number_of_operators: bool = True
 ):
@@ -43,6 +44,9 @@ def start_maze_solving(
     :param print_path:
         Flag if the found path through the maze should be shown.
 
+    :param print_error_path:
+        Flag if the erroneous path through the maze should be shown.
+
     :param print_operators:
         Flag if the list of applied operators on the path should be printed.
 
@@ -68,7 +72,7 @@ def start_maze_solving(
         # Define State Space
         state_space = StateSpace(
             initial_state=Position(maze.field_at(1, 1)),
-            goal_state=Position(maze.field_at(maze_size, 1)),
+            goal_state=Position(maze.field_at(maze_size, maze_size)),
             operators=operators,
             algorithm=algorithm
         )
@@ -95,10 +99,11 @@ def start_maze_solving(
                 visited = [(parent.x, parent.y) for parent in parents]
                 print(maze.stringify_maze(fields_to_replace=visited))
 
-        except NoSolutionFound:
-            print(f"ERROR: Algorithm {algorithm} is not able to find solution")
+        except NoSolutionFound as error:
+            print(error.message)
+            if print_error_path:
+                parents = error.state.all_parents(include_self=True)
+                visited = [(parent.x, parent.y) for parent in parents]
+                print(maze.stringify_maze(fields_to_replace=visited))
 
         print("\n")
-
-
-

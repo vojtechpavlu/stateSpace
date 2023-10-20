@@ -53,4 +53,7 @@ class FullRandom(Algorithm):
             current = randomly_selected.apply(current)
 
         # There's no state to be searched in and still no solution found
-        raise NoSolutionFound()
+        raise NoSolutionFound(
+            state=current,
+            message=f"Reached the {self.limit = }"
+        )
