@@ -8,6 +8,7 @@ from src.fw.algorithms.base import Algorithm
 from src.fw.algorithms.bfs import BreadthFirstSearch
 from src.fw.algorithms.dfs import DepthFirstSearch
 from src.fw.algorithms.greedy import GreedySearch
+from src.fw.algorithms.a_star import AStar
 from src.fw.algorithms.random_algo import FullRandom
 
 
@@ -21,6 +22,7 @@ def algorithms() -> tuple[Algorithm]:
 
         # Heuristic algorithms
         GreedySearch(),
+        AStar(),
 
         # Random algorithms
         # Random()
