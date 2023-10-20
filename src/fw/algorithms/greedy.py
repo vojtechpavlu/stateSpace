@@ -28,25 +28,3 @@ class GreedySearch(Algorithm):
         closest = min(self.fringe, key=comparison)
         self.drop_from_fringe(closest)
         return closest
-
-    # def solve(self, initial_state: State, goal_state: State,
-    #           operators: tuple[Operator]) -> State:
-    #     """Implementation of the actual algorithm."""
-    #     self.__fringe.append(initial_state)
-    #
-    #     while len(self.fringe) > 0:
-    #         current = self.next_state()
-    #
-    #         if current == goal_state:
-    #             return current
-    #
-    #         if current in self.closed:
-    #             continue
-    #
-    #         for operator in operators:
-    #             if operator.can_be_applied(current):
-    #                 self.__fringe.append(operator.apply(current))
-    #         self.__closed.append(current)
-    #
-    #     raise NoSolutionFound()
-
