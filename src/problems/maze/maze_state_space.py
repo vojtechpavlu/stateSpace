@@ -25,6 +25,9 @@ class Position(State):
     def __eq__(self, other: "Position"):
         return self.x == other.x and self.y == other.y
 
+    def __repr__(self):
+        return f"{self.field}"
+
 
 class DirectionOperator(Operator):
     """This class defines operators as a movement over the maze in a specific

@@ -8,14 +8,14 @@ from src.problems.maze.maze_state_space import Position, DirectionOperator
 
 
 def start_maze_solving(
-        maze_size: int = 0,
-        maze: Union[Maze, None] = None,
-        use_algorithms: Iterable[Algorithm] = algorithms(),
-        print_time: bool = True,
-        print_empty: bool = True,
-        print_path: bool = True,
-        print_operators: bool = True,
-        print_number_of_operators: bool = True
+    maze_size: int = 0,
+    maze: Union[Maze, None] = None,
+    use_algorithms: Union[Iterable[Algorithm], Iterable[str]] = algorithms(),
+    print_time: bool = True,
+    print_empty: bool = True,
+    print_path: bool = True,
+    print_operators: bool = True,
+    print_number_of_operators: bool = True
 ):
     """Facade function to schedule solution of a random maze.
 
@@ -68,7 +68,7 @@ def start_maze_solving(
         # Define State Space
         state_space = StateSpace(
             initial_state=Position(maze.field_at(1, 1)),
-            goal_state=Position(maze.field_at(maze_size, maze_size)),
+            goal_state=Position(maze.field_at(maze_size, 1)),
             operators=operators,
             algorithm=algorithm
         )

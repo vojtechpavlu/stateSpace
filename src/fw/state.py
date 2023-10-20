@@ -68,16 +68,22 @@ class State(ABC):
         achieve this state in order from the origin state to this one.
 
         :param reverse_operators: Reversing the order of operators
-                                  (True: direct to origin;
-                                  False: origin to direct)
+                                  (True: origin to direct;
+                                  False: direct to origin)
         """
-        all_parents = self.all_parents(include_self=True)[1:]
-        all_operators = [parent.applied_operator for parent in all_parents]
+
+        operators = []
+        current = self
+
+        while current:
+            if current.parent and current.applied_operator:
+                operators.append(current.applied_operator)
+            current = current.parent
 
         if reverse_operators:
-            return tuple(reversed(all_operators))
+            return tuple(reversed(operators))
         else:
-            return tuple(all_operators)
+            return tuple(operators)
 
     def num_of_parents(self) -> int:
         """Number of parents this state has. This also describes the
