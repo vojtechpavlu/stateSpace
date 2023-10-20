@@ -1,5 +1,5 @@
-from src.fw import State, Operator
-from src.fw.algorithms.base import Algorithm, NoSolutionFound
+from src.fw import State
+from src.fw.algorithms.base import Algorithm
 
 
 class GreedySearch(Algorithm):
@@ -9,16 +9,6 @@ class GreedySearch(Algorithm):
 
     def __init__(self):
         super().__init__("GREEDY")
-        self.__fringe: list[State] = []
-        self.__closed: list[State] = []
-
-    @property
-    def fringe(self) -> tuple[State]:
-        return tuple(self.__fringe)
-
-    @property
-    def closed(self) -> tuple[State]:
-        return tuple(self.__closed)
 
     def next_state(self) -> State:
         """Return the state closest to the goal state.
@@ -36,27 +26,27 @@ class GreedySearch(Algorithm):
 
         # Find the state in fringe that is closest to the goal
         closest = min(self.fringe, key=comparison)
-        self.__fringe.remove(closest)
+        self.drop_from_fringe(closest)
         return closest
 
-    def solve(self, initial_state: State, goal_state: State,
-              operators: tuple[Operator]) -> State:
-        """Implementation of the actual algorithm."""
-        self.__fringe.append(initial_state)
-
-        while len(self.fringe) > 0:
-            current = self.next_state()
-
-            if current == goal_state:
-                return current
-
-            if current in self.closed:
-                continue
-
-            for operator in operators:
-                if operator.can_be_applied(current):
-                    self.__fringe.append(operator.apply(current))
-            self.__closed.append(current)
-
-        raise NoSolutionFound()
+    # def solve(self, initial_state: State, goal_state: State,
+    #           operators: tuple[Operator]) -> State:
+    #     """Implementation of the actual algorithm."""
+    #     self.__fringe.append(initial_state)
+    #
+    #     while len(self.fringe) > 0:
+    #         current = self.next_state()
+    #
+    #         if current == goal_state:
+    #             return current
+    #
+    #         if current in self.closed:
+    #             continue
+    #
+    #         for operator in operators:
+    #             if operator.can_be_applied(current):
+    #                 self.__fringe.append(operator.apply(current))
+    #         self.__closed.append(current)
+    #
+    #     raise NoSolutionFound()
 

@@ -12,50 +12,6 @@ class Algorithm(ABC):
         self.__name = name
         self.__goal: Union[State, None] = None
 
-    @property
-    def name(self) -> str:
-        """Name of the algorithm"""
-        return self.__name
-
-    @property
-    def goal_state(self) -> State:
-        """State the algorithm should be trying to reach."""
-        return self.__goal
-
-    @goal_state.setter
-    def goal_state(self, goal: State):
-        """Setter for the goal state the algorithm should be trying to reach.
-        """
-        self.__goal = goal
-
-    @abstractmethod
-    def next_state(self):
-        """Provides next state to be searched."""
-
-    @abstractmethod
-    def solve(
-            self,
-            initial_state: State,
-            goal_state: State,
-            operators: tuple[Operator]
-    ) -> State:
-        """Tries to find the solution.
-        When finished, it returns the state equivalent to the goal one with
-        assigned tree-path from the root with all the applied operators.
-        """
-
-    def __repr__(self):
-        return self.name
-
-
-class BlindAlgorithm(Algorithm, ABC):
-    """Base for blind algorithm that defines the general algorithm.
-    The only method that has to be overridden is the `next_state`.
-    """
-
-    def __init__(self, name: str):
-        super().__init__(name)
-
         # Scheduled states to be searched in
         self.__fringe: list[State] = []
 
@@ -76,11 +32,34 @@ class BlindAlgorithm(Algorithm, ABC):
     def pop_from_fringe(self, index: int) -> State:
         return self.__fringe.pop(index)
 
+    def drop_from_fringe(self, state: State):
+        self.__fringe.remove(state)
+
     def add_to_closed(self, state: State):
         self.__closed.append(state)
 
     def is_in_closed(self, state: State) -> bool:
         return state in self.closed
+
+    @property
+    def name(self) -> str:
+        """Name of the algorithm"""
+        return self.__name
+
+    @property
+    def goal_state(self) -> State:
+        """State the algorithm should be trying to reach."""
+        return self.__goal
+
+    @goal_state.setter
+    def goal_state(self, goal: State):
+        """Setter for the goal state the algorithm should be trying to reach.
+        """
+        self.__goal = goal
+
+    @abstractmethod
+    def next_state(self):
+        """Provides next state to be searched."""
 
     def solve(
             self,
@@ -88,6 +67,10 @@ class BlindAlgorithm(Algorithm, ABC):
             goal_state: State,
             operators: tuple[Operator]
     ) -> State:
+        """Tries to find the solution.
+        When finished, it returns the state equivalent to the goal one with
+        assigned tree-path from the root with all the applied operators.
+        """
         self.add_to_fringe(initial_state)
 
         while len(self.fringe) > 0:
@@ -106,7 +89,6 @@ class BlindAlgorithm(Algorithm, ABC):
 
                 # If can this operator be applied on a current state
                 if operator.can_be_applied(current):
-
                     # Schedule further searching of the descendant
                     self.add_to_fringe(operator.apply(current))
 
@@ -115,6 +97,9 @@ class BlindAlgorithm(Algorithm, ABC):
 
         # There's no state to be searched in and still no solution found
         raise NoSolutionFound()
+
+    def __repr__(self):
+        return self.name
 
 
 class NoSolutionFound(Exception):
