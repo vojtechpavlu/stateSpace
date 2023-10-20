@@ -3,7 +3,14 @@ from src.fw.algorithms.base import Algorithm
 
 
 class AStar(Algorithm):
-    """"""
+    """A* algorithm is well known for it's ability to use two separate
+    heuristic functions to evaluate each node in the graph and using this
+    approach it usually finds a very good solution.
+
+    The drawback is that this naive implementation is not optimized for this
+    approach and takes longer time to search (due to the nature of the
+    parents back-tracking).
+    """
 
     def __init__(self):
         super().__init__("A_STAR")
@@ -23,6 +30,6 @@ class AStar(Algorithm):
         get to the current state (g) and a lower-bound cost estimate to
         get from it to the goal state (h).
         """
-        g = len(state.all_applied_operators())
+        g = len(state.all_parents())
         h = state.distance_from(self.goal_state)
         return g + h
