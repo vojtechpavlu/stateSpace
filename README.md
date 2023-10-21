@@ -62,3 +62,12 @@ Here's a list of implemented example problems the State Space can be useful
 for.
 
 ### Path Searching in Maze
+
+
+````python
+from src.problems.maze.maze_starter import start_maze_solving
+
+start_maze_solving(
+    maze_size=21
+)
+````
