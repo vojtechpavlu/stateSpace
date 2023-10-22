@@ -83,7 +83,8 @@ def start_maze_solving(
             ended = time.time()
 
             # Analyze applied operators
-            applied_operators = solution.all_applied_operators()
+            applied_operators = (
+                solution.all_applied_operators(reverse_operators=True))
 
             if print_time:
                 print(f"Solution found in {ended - started} seconds")
