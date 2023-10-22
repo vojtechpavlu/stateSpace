@@ -100,6 +100,9 @@ class State(ABC):
         :return: Float representing the distance from the given state.
         """
 
+    def __eq__(self, other: "State") -> bool:
+        return self.distance_from(other) == 0
+
 
 class Operator(ABC):
     """Abstract representation of operation to be performed over a given
