@@ -28,6 +28,7 @@ class GradientSearch(Algorithm):
     ) -> State:
         """"""
         current_state = initial_state
+        closed = []
 
         while current_state != goal_state:
             children: list[State] = []
@@ -35,25 +36,33 @@ class GradientSearch(Algorithm):
             # Get the child states
             for operator in operators:
                 if operator.can_be_applied(current_state):
-                    children.append(operator.apply(current_state))
+                    child = operator.apply(current_state)
+                    if child not in closed:
+                        children.append(child)
 
-            def helper_function(state: State) -> float:
+            def evaluate(state: State) -> float:
                 """Tries to evaluate the distance between the given state
                 and a goal one for easier readability of the code."""
                 return state.distance_from(goal_state)
 
             # Find the child that lowers the cost function the best
-            best = min(children, key=helper_function)
+            best = min(children, key=evaluate)
+
+            e_curr, e_best = evaluate(current_state), evaluate(best)
 
             # When the current state is better than the best of its
             # children, the algorithm got into a local extrema and it
             # simply cannot continue in computation
-            if helper_function(best) > helper_function(current_state):
+            if e_best > e_curr:
                 raise NoSolutionFound(
                     state=current_state,
-                    message=("Stuck at local extrema - none of the children "
-                             "can lower the value of the cost function")
+                    message=f"Stuck at local extrema - none of the children "
+                            f"can lower the value of the cost function: "
+                            f"{e_curr} < {e_best}"
                 )
+
+            # Close the state
+            closed.append(current_state)
 
             # When got better, set the best one as next state
             current_state = best
