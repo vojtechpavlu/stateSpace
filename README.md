@@ -63,11 +63,87 @@ for.
 
 ### Path Searching in Maze
 
+The goal of this problem is simple - to find a path from the start to the end.
+
+The actual maze could be imagined as following:
+
+```
+▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒
+▒       ▒       ▒
+▒ ▒ ▒   ▒   ▒   ▒
+▒           ▒   ▒
+▒   ▒ ▒ ▒ ▒ ▒   ▒
+▒   ▒   ▒       ▒
+▒   ▒   ▒   ▒ ▒ ▒
+▒               ▒
+▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒
+```
+
+The start is (by default) defined at position `[0, 0]`, which is at the bottom
+left corner, while the end is assumed to be at the opposite corner (top right).
+
+The path can be described as at the following figure:
+
+```
+▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒
+▒       ▒     * ▒
+▒ ▒ ▒   ▒   ▒ * ▒
+▒           ▒ * ▒
+▒   ▒ ▒ ▒ ▒ ▒ * ▒
+▒   ▒   ▒ * * * ▒
+▒   ▒   ▒ * ▒ ▒ ▒
+▒ * * * * *     ▒
+▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒ ▒
+```
+
+To enable the search algorithms, you can trigger it by the following snippet
+in the `main.py` file:
 
 ````python
 from src.problems.maze.maze_starter import start_maze_solving
 
 start_maze_solving(
-    maze_size=21
+    maze_size=21,
+    use_algorithms=["GRADIENT", "GREEDY", "A_STAR", "BFS", "DFS"]
 )
 ````
+
+
+### 8-Puzzle
+
+8-Puzzle is a simple board-based game where you are ordering a grid of tiles
+(fields) with assigned values. It's called 8-Puzzle because there are 8 of
+these fields you can move in the 9 space grid. There are also variants with
+larger number of squares you can move around but with only single empty one.
+
+The grid might look like something like this:
+
+```
+1 5 2 3
+8 _ 4 7
+9 D 6 B
+C E A F
+```
+
+with a goal (ordered grid) specified as:
+
+```
+_ 1 2 3
+4 5 6 7
+8 9 A B
+C D E F
+```
+
+To define such a task, you can simply start the generation mechanism and actual
+test by the following code from `main.py`:
+
+
+```python
+from src.problems.eight_puzzle import start_8_puzzle
+
+start_8_puzzle(
+    steps=10,
+    base_size=4,
+    algos=["GRADIENT", "GREEDY", "A_STAR", "BFS"]
+)
+```

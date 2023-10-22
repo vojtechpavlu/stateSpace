@@ -1,9 +1,3 @@
-from src.problems.maze.maze_starter import start_maze_solving
+from src.problems.eight_puzzle import start_8_puzzle
 
-start_maze_solving(
-    maze_size=21,
-    print_path=True,
-    print_empty=False,
-    print_operators=False
-)
-
+start_8_puzzle(steps=10, algos=["GRADIENT", "GREEDY", "A_STAR", "BFS"])

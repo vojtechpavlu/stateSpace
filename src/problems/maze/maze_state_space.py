@@ -22,9 +22,6 @@ class Position(State):
     def distance_from(self, state: "Position") -> float:
         return (((self.x - state.x) ** 2) + (self.y - state.y) ** 2) ** 0.5
 
-    def __eq__(self, other: "Position"):
-        return self.x == other.x and self.y == other.y
-
     def __repr__(self):
         return f"{self.field}"
 

@@ -1,3 +1,4 @@
+from typing import Iterable
 from dataclasses import dataclass
 from typing import Union
 
@@ -9,11 +10,24 @@ from src.fw.algorithms import Algorithm, find
 class StateSpace:
     """Instances of this class tries to provide a simple facade to use and
     manage the State Space API.
+
+    State Space initor takes the following parameters:
+        - `initial_state`: `State`
+            State the algorithm should be seeking the path from
+
+        - `goal_state`: `State`
+            State the algorithm should find the path to
+
+        - `operators`: `Iterable[Operator]`
+            Available operators the algorithm can use
+
+        - `algorithm`: `Union[Algorithm, str]`
+            Algorithm to be used to search in a graph
     """
 
     initial_state: State                # Root of the State Space Tree
     goal_state: State                   # Desired leaf of the State Space Tree
-    operators: tuple[Operator]          # Available operators to be used
+    operators: Iterable[Operator]       # Available operators to be used
     algorithm: Union[Algorithm, str]    # Algorithm to be used to search
 
     def solve(self) -> State:
@@ -27,5 +41,5 @@ class StateSpace:
         return algo.solve(
             self.initial_state,
             self.goal_state,
-            self.operators
+            tuple(self.operators)
         )
