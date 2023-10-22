@@ -45,6 +45,12 @@ class GradientSearch(Algorithm):
                 and a goal one for easier readability of the code."""
                 return state.distance_from(goal_state)
 
+            if not children:
+                raise NoSolutionFound(
+                    state=current_state,
+                    message=f"Stuck at local extrema - there's no child"
+                )
+
             # Find the child that lowers the cost function the best
             best = min(children, key=evaluate)
 
