@@ -1,3 +1,3 @@
-from src.problems.eight_puzzle.puzzle_starter import start_8_puzzle
+from src.problems.eight_puzzle import start_8_puzzle
 
-start_8_puzzle(steps=20, algos=["GREEDY", "A_STAR"])
+start_8_puzzle(steps=10, algos=["GRADIENT", "GREEDY", "A_STAR", "BFS"])

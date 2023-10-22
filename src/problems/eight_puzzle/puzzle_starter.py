@@ -2,6 +2,7 @@ from time import time
 from typing import Union, Iterable
 
 from src.fw import Algorithm, algorithms, StateSpace
+from src.fw.algorithms.base import NoSolutionFound
 from src.problems.eight_puzzle.puzzle_definition import Grid, Move
 from src.problems.eight_puzzle.puzzle_generator import generate, \
     GeneratorVariant
@@ -51,10 +52,13 @@ def start_8_puzzle(
 
         print(f"Trying algorithm: '{algo}'")
 
-        start = time()
-        solution = ss.solve()
-        end = time()
+        try:
+            start = time()
+            solution = ss.solve()
+            end = time()
+            applied_operators = solution.all_applied_operators()
+            print(f"{len(applied_operators)}: {applied_operators}")
+            print(f"Solution found in {end - start} seconds")
 
-        applied_operators = solution.all_applied_operators()
-        print(f"{len(applied_operators)}: {applied_operators}")
-        print(f"Solution found in {end - start} seconds")
+        except NoSolutionFound as err:
+            print(err.message)
