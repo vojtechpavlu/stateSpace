@@ -439,7 +439,8 @@ class Grid:
 
         if len(values) != base_size ** 2:
             raise InconsistentGrid(
-                f"Number of values doesn't match the base size: {base_size}")
+                f"Number of values doesn't match the base size: "
+                f"{base_size = }, number of fields = {len(values)}")
 
         fields = []
 
