@@ -1,9 +1,7 @@
-from time import time
+from typing import Union
 
-from src.fw import State, Operator, StateSpace, Union, algorithms
-from src.problems.eight_puzzle.puzzle_definition import Grid, Move
-from src.problems.eight_puzzle.puzzle_generator import generate, \
-    GeneratorVariant
+from src.fw import State, Operator
+from .puzzle_definition import Grid, Move
 
 
 class GridState(State):
