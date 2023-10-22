@@ -2,7 +2,8 @@ from time import time
 
 from src.fw import State, Operator, StateSpace, Union, algorithms
 from src.problems.eight_puzzle.puzzle_definition import Grid, Move
-from src.problems.eight_puzzle.puzzle_generator import generate
+from src.problems.eight_puzzle.puzzle_generator import generate, \
+    GeneratorVariant
 
 
 class GridState(State):
@@ -64,9 +65,15 @@ class GridOperator(Operator):
         )
 
 
-organized = list("_123456789ABCDEF")
-initial_grid = generate(organized=Grid.of(organized, 4))[0]
-goal_grid = Grid.of(values=organized, base_size=4)
+base_size = 3
+
+organized = Grid.default_grid_values(base_size)
+
+initial_grid, goal_grid = generate(
+    variant=GeneratorVariant.EASY_9,
+    organized=Grid.of(organized, base_size),
+    random_steps=20
+)
 
 print(initial_grid)
 
@@ -79,7 +86,12 @@ print(initial_state.stringify())
 print()
 print(goal_state.stringify())
 
-for algo in ["A_STAR", "GREEDY", "BFS"]:
+# for algo in ["A_STAR", "GREEDY", "BFS", "DFS"]:
+for algo in ["A_STAR", "GREEDY"]:
+
+    print("\n")
+    print(100 * "=")
+
     ss = StateSpace(
         initial_state=initial_state,
         goal_state=goal_state,

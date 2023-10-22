@@ -9,8 +9,8 @@ class Field:
 
     # Private collection of available values
     __AVAILABLE_VALUES: tuple[str] = tuple([
-        '_', '1', '2', '3', '4', '5', '6', '7',
-        '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'
+        '_', '1', '2', '3', '4', '5', '6', '7', '8', '9', 'A', 'B', 'C',
+        'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O'
     ])
 
     def __init__(self, x: int, y: int, value: str):
@@ -456,6 +456,18 @@ class Grid:
 
         # Return the brand new Grid instance
         return Grid(base_size, fields)
+
+    @staticmethod
+    def default_grid_values(base_size: int = 3) -> str:
+        """"""
+        if base_size == 3:
+            return "1234_5678"
+        elif base_size == 4:
+            return "_123456789ABCDEF"
+        elif base_size == 5:
+            return "123456789ABC_DEFGHIJKLMNO"
+
+        raise ValueError(f"Not available {base_size = }")
 
 
 class InconsistentGrid(Exception):
