@@ -7,7 +7,7 @@ from src.problems.eight_puzzle.puzzle_generator import generate, \
 
 
 class GridState(State):
-    """"""
+    """State represented as a current Grid with fields positioned."""
 
     def __init__(
             self,
@@ -20,15 +20,16 @@ class GridState(State):
 
     @property
     def grid(self) -> Grid:
-        """"""
+        """The actual grid"""
         return self.__grid
 
     def distance_from(self, state: "GridState") -> float:
-        """"""
-        return self.grid.number_of_different_values(state.grid)
+        """Calculates the distance between misplaced fields using manhattan
+        distance."""
+        return self.grid.manhattan_distance(state.grid)
 
     def stringify(self) -> str:
-        """"""
+        """Tries to stringify the grid"""
         lines = []
 
         for row in self.grid.rows:
@@ -39,7 +40,7 @@ class GridState(State):
 
 
 class GridOperator(Operator):
-    """"""
+    """Operator represented as a move in direction."""
 
     def __init__(self, direction_move: Move):
         super().__init__(direction_move.name)
@@ -47,7 +48,7 @@ class GridOperator(Operator):
 
     @property
     def direction(self) -> Move:
-        """"""
+        """Direction it can move to."""
         return self.__direction
 
     def can_be_applied(self, state: GridState) -> bool:
@@ -63,48 +64,3 @@ class GridOperator(Operator):
             parent=state,
             applied_operator=self
         )
-
-
-base_size = 3
-
-organized = Grid.default_grid_values(base_size)
-
-initial_grid, goal_grid = generate(
-    variant=GeneratorVariant.EASY_9,
-    organized=Grid.of(organized, base_size),
-    random_steps=20
-)
-
-print(initial_grid)
-
-initial_state = GridState(initial_grid)
-goal_state = GridState(goal_grid)
-
-operators = [GridOperator(m) for m in Move]
-
-print(initial_state.stringify())
-print()
-print(goal_state.stringify())
-
-# for algo in ["A_STAR", "GREEDY", "BFS", "DFS"]:
-for algo in ["A_STAR", "GREEDY"]:
-
-    print("\n")
-    print(100 * "=")
-
-    ss = StateSpace(
-        initial_state=initial_state,
-        goal_state=goal_state,
-        operators=operators,
-        algorithm=algo
-    )
-
-    print(f"Trying algorithm: '{algo}'")
-
-    start = time()
-    solution = ss.solve()
-    end = time()
-
-    applied_operators = solution.all_applied_operators()
-    print(f"{len(applied_operators)}: {applied_operators}")
-    print(f"Solution found in {end - start} seconds")

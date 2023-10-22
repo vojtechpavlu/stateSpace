@@ -1,7 +1,3 @@
-from src.problems.maze.maze_starter import start_maze_solving
+from src.problems.eight_puzzle.puzzle_starter import start_8_puzzle
 
-start_maze_solving(
-    maze_size=21
-)
-
-# print(list("_123456789ABCDE"))
+start_8_puzzle(steps=20, algos=["GREEDY", "A_STAR"])

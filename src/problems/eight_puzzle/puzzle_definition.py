@@ -72,15 +72,14 @@ class Field:
         """Returns a clone of this field"""
         return Field(self.x, self.y, self.value)
 
-    def __eq__(self, other: "Field") -> bool:
-        """Compares two fields based on the `x` and `y` coordinates
-        and a value if all these are the same.
-        """
-        return (
-            self.x == other.x and
-            self.y == other.y and
-            self.value == other.value
-        )
+    def manhattan_distance(self, other: "Field") -> int:
+        """Tries to calculate the manhattan distance (taxicab) between this
+        field instance and the given one by their coordinates.
+
+        The fields doesn't need to be at the same grid, it only works with
+        their coordinates."""
+        distance = abs(self.x - other.x) + abs(self.y - other.y)
+        return distance
 
     @classmethod
     def available_values(cls) -> tuple[str]:
@@ -95,6 +94,19 @@ class Field:
 
     def __repr__(self) -> str:
         return f"{[self.value, *self.coordinates]}"
+
+    def __eq__(self, other: "Field") -> bool:
+        """Compares two fields based on the `x` and `y` coordinates
+        and a value if all these are the same.
+        """
+        return (
+            self.x == other.x and
+            self.y == other.y and
+            self.value == other.value
+        )
+
+    def __hash__(self):
+        return hash((self.value, self.x, self.y))
 
 
 class Move(Enum):
@@ -173,6 +185,9 @@ class Grid:
 
         if not self.empty_field:
             raise InconsistentGrid("Grid doesn't have an empty field")
+
+        if len(self.fields) != len(set(self.fields)):
+            raise InconsistentGrid("Cannot have duplicate values of fields")
 
     @property
     def base_size(self) -> int:
@@ -332,6 +347,13 @@ class Grid:
             if field.x == x and field.y == y:
                 return field
 
+    def field_by_value(self, value: str) -> Field:
+        """Tries to find a field with the given value. When no such field is
+        found, it returns None."""
+        for field in self.fields:
+            if field.value == value:
+                return field
+
     def switch_fields(self, x1: int, y1: int, x2: int, y2: int) -> "Grid":
         """Tries to switch the fields at given coordinates.
 
@@ -427,6 +449,31 @@ class Grid:
 
         return n_differences
 
+    def manhattan_distance(self, other: "Grid") -> int:
+        """Calculates the distance between two different grids by evaluating
+        the manhattan distance between each misplaced fields (in terms of its
+        value).
+        """
+        if self.base_size != other.base_size:
+            raise IncomparableGrids(
+                "Grids have different base size", self, other)
+
+        if sorted(self.values) != sorted(other.values):
+            raise IncomparableGrids(
+                "Grids have different values", self, other)
+
+        total_manhattan_distance = 0
+
+        for field in self.fields:
+            other_field = other.field_by_value(field.value)
+
+            if field.x != other_field.x or field.y != other_field.y:
+                total_manhattan_distance += (
+                    field.manhattan_distance(other_field)
+                )
+
+        return total_manhattan_distance
+
     @staticmethod
     def of(values: Union[Iterable[str], str], base_size: int = 3) -> "Grid":
         """Tries to create a grid from the given string or an iterable of
@@ -459,7 +506,7 @@ class Grid:
 
     @staticmethod
     def default_grid_values(base_size: int = 3) -> str:
-        """"""
+        """Returns the ordered (default) field values for a grid."""
         if base_size == 3:
             return "1234_5678"
         elif base_size == 4:

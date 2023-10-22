@@ -100,6 +100,15 @@ class GeneratorVariant(Enum):
             random.shuffle(charset)
             return Grid.of(values=''.join(charset), base_size=self.base)
 
+    @staticmethod
+    def find(base_size: int, easy: bool = True) -> "GeneratorVariant":
+        for variant in GeneratorVariant:
+            if variant.base == base_size and variant.easy == easy:
+                return variant
+
+        raise ValueError(f"No variant for {base_size = }, {easy = }")
+
+
 
 def prune_operators(operators: list[Move]):
     """Tries to remove the consecutive opposite operators from the generation
