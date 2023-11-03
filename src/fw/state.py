@@ -90,6 +90,14 @@ class State(ABC):
         path length."""
         return len(self.all_parents(include_self=False))
 
+    def is_terminal_state(self, goal_state: "State") -> bool:
+        """Returns if this is the final state or not.
+
+        This method is implemented, but in some problems, useful to override
+        it to have more control over the terminality checking.
+        """
+        return self == goal_state
+
     @abstractmethod
     def distance_from(self, state: "State") -> float:
         """Abstract method calculating a distance between this state and
