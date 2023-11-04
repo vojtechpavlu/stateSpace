@@ -1,9 +1,6 @@
-from time import time
-
-from src.fw import State, Union, Operator, StateSpace
-from src.fw.algorithms.base import NoSolutionFound
-from src.problems.countdown.countdown_definition import AvailableNumbers, \
-    NumberOperation, number_operations
+from src.fw import State, Union, Operator
+from src.problems.countdown.countdown_definition import (
+    AvailableNumbers, NumberOperation)
 
 
 class CountdownState(State):
