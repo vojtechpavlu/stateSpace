@@ -155,6 +155,10 @@ This game is one of the disciplines of popular TV show Countdown.
 The goal of the game is to combine the given numbers by basic mathematical
 operations to achieve the goal number.
 
+For reference, have a look at these links:
+- https://en.wikipedia.org/wiki/Countdown_(game_show)#Numbers_Round
+- https://www.youtube.com/watch?v=JTtu_O3E41U
+
 The basic mathematical operations are:
 
 - Addition
