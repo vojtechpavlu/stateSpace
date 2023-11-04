@@ -58,7 +58,7 @@ class Algorithm(ABC):
         self.__goal = goal
 
     @abstractmethod
-    def next_state(self):
+    def next_state(self) -> State:
         """Provides next state to be searched."""
 
     def solve(
@@ -77,7 +77,7 @@ class Algorithm(ABC):
             current = self.next_state()
 
             # When the current state is the desired one
-            if current == goal_state:
+            if current.is_terminal_state(goal_state):
                 return current
 
             # When the current state was already closed
