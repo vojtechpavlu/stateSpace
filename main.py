@@ -1,3 +1,7 @@
-from src.problems.eight_puzzle import start_8_puzzle
+from src.problems.countdown.countdown_starter import countdown
 
-start_8_puzzle(steps=10, algos=["GRADIENT", "GREEDY", "A_STAR", "BFS"])
+countdown(
+    use_algorithms=["BFS", "A_STAR", "GREEDY"],
+    numbers=[75, 50, 2, 3, 8, 7],
+    goal_number=812
+)
