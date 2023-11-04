@@ -1,7 +1,7 @@
-from src.problems.countdown.countdown_starter import countdown
+from src.problems.countdown import countdown
 
 countdown(
-    use_algorithms=["BFS", "A_STAR", "GREEDY"],
-    numbers=[75, 50, 2, 3, 8, 7],
-    goal_number=812
+    use_algorithms=["DFS", "A_STAR", "GREEDY"],
+    numbers=[333, 100, 71, 49, 33, 20, 11, 8, 7, 5, 2],
+    goal_number=449
 )

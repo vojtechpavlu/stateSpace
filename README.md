@@ -147,3 +147,74 @@ start_8_puzzle(
     algos=["GRADIENT", "GREEDY", "A_STAR", "BFS"]
 )
 ```
+
+### Numbers Round of Countdown
+
+This game is one of the disciplines of popular TV show Countdown.
+
+The goal of the game is to combine the given numbers by basic mathematical
+operations to achieve the goal number.
+
+The basic mathematical operations are:
+
+- Addition
+- Subtraction
+- Multiplication
+- Division
+
+Originally there are 6 initial numbers at the board and are of two types:
+
+- Small ones `[1-10]`
+- Big ones `{25, 50, 75, 100}`
+
+
+To start the game up, you can use the following code for randomized game:
+
+```python
+from src.problems.countdown import countdown, NumbersType
+
+countdown(
+    use_algorithms=["BFS", "A_STAR", "GREEDY"],
+    numbers_type=NumbersType.TWO_BIG
+)
+```
+
+*Keep in mind that the combination of initial numbers and the goal number might
+not have any possible solution.*
+
+*Also keep in mind that there is a huge branching factor of the problem - for
+each two numbers, there is multiple of operators. The problem solving might
+take long even for "easy" numbers. The reason for it is that the algorithm
+has a huge state space to search in.*
+
+Let's assume we have 4 possible operations (`+`, `-`, `*`, `/`) and 6 numbers.
+At the first level of the tree (from the root; `layer=0`), we can choose one
+of the 4 operations and one of the number couples (which is 30 possible 
+combinations). So, at the beginning, we're searching in 120 operators.
+
+After application of the first operator, we have still 4 possible operations,
+but the number's length shrank to 5 numbers (20 combinations), which leads to
+80 possible operators. The number of operators to be searched in for the second
+level of the State Space tree (`layer=1`) is 9600 possible states.
+
+In the third level, we have 4 operators and 4 usable numbers (12 combinations),
+which means 48 possible states; it means `460 800` states to be searched in 
+for each of the previous paths. And so on.
+
+
+Alternatively, you can pass the predefined game of any type:
+
+```python
+from src.problems.countdown import countdown
+
+countdown(
+    use_algorithms=["DFS", "A_STAR", "GREEDY", "BFS"],
+    numbers=[333, 100, 71, 49, 33, 20, 11, 8, 7, 5, 2],
+    goal_number=449
+)
+```
+
+*(As it's mentioned above, this initial numbers will take a really long time, 
+because of the combinatorial explosion and the naivity of implementation). 
+This time, it's much easier to calculate it manually (`333 - 33 + 100 + 49 = 449`).*
+
